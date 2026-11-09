@@ -1,0 +1,3 @@
+﻿model,city,seed,trajectories,success_pct,ci95_pct,runtime_sec,out_of_map,arrived_ok
+B1,Singapore,7,32,18.8,8.9–35.3,35.5,26,6
+B1,SF,7,32,40.6,25.5–57.7,29.0,19,13

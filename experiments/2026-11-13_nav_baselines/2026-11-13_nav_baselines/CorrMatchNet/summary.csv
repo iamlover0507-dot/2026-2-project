@@ -1,0 +1,3 @@
+﻿model,city,seed,trajectories,success_pct,ci95_pct,runtime_sec,out_of_map,arrived_ok
+CorrMatchNet,Singapore,7,32,100.0,89.3–100.0,50.7,0,32
+CorrMatchNet,SF,7,32,100.0,89.3–100.0,52.4,0,32
