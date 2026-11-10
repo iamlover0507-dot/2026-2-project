@@ -103,10 +103,15 @@ Heading 변환 규칙 설정에 사용하지 않은 새 표본 38개에서 다�
 ```text
 experiments/2026-11-13_external/
 ├── README.md
-├── c5_evaluate_summary.csv
-├── c5_paired_comparison.csv
-├── c5_heading_validation.csv
-└── c5_bias_diagnostic.csv
+├── LoMa-B128/
+│   ├── loma-b128-v5_b128_s1.csv
+│   ├── loma-b128-v5_b128_s1_angles.csv
+│   └── summary.csv
+├── LoMa-B/
+│   ├── loma-v5_loma_s1.csv
+│   ├── loma-v5_loma_s1_angles.csv
+│   └── summary.csv
+└── label_check_v5_loma.csv
 ```
 
 각 CSV는 실제 계산 결과를 기록한다. 진단용 편향 보정 결과는 공식 성능 결과와 분리한다.
