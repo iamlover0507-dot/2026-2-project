@@ -1,5 +1,0 @@
-﻿dataset,sample_range,B128_only_success,LoMa_only_success,mcnemar_p_value
-Singapore,k=0~999,35,76,0.0001247
-Singapore,k=100~999,32,64,0.001424
-San Francisco,k=0~999,1,6,0.125
-San Francisco,k=100~999,1,5,0.2188

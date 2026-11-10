@@ -1,3 +1,0 @@
-﻿dataset,split,sample_range,n,success_10m_pct,fail_pct,median_location_error_m,mean_time_s
-Singapore,3d_ho37bc,k=0~999,1000,63.4,17.3,6.14,0.222
-San Francisco,3d_ho38bc,k=0~999,1000,95.4,1.1,2.97,0.217
