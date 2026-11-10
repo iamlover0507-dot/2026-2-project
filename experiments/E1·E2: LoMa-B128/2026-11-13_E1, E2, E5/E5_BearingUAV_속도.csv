@@ -1,6 +1,0 @@
-﻿metric,value,unit
-full_forward,79.9,ms/sample
-precomputed_tile_features,16.5,ms/sample
-model_parameters,17.13,million
-backbone_parameters,9.5,million_approx
-weight_size,69.0,MB_approx
