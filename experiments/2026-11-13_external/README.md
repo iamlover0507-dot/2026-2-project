@@ -17,20 +17,47 @@ UAV-VisLoc Example의 Sequence 03을 이용해 기존 Trone-iMatch 파이프라�
 
 ### 데이터 변환
 
-최종 변환 스크립트 경로:
+실험 당시 실제 사용한 변환 스크립트는 `export_external_v5.py`이다. 이 스크립트는 기존 `export_external_v3.py`의 GeoTIFF 처리 및 지도 블록 생성 함수를 가져와 UAV-VisLoc Sequence 03 데이터를 변환한다.
+
+**실제 실행 명령**
 
 ```bash
-python scripts/export_external.py --help
+python /kaggle/working/export_external_v5.py \
+  --root "<UAV_VisLoc_example (1)>" \
+  --out /kaggle/working/data_uavvisloc_v5_260
 ```
 
-위 명령은 스크립트의 실제 인자 형식을 확인하기 위한 명령이다.
+위 명령은 다음 기본 인자를 사용한다.
 
-실험 기록에는 `export_external_v5.py`를 사용한 실행 이력이 있으나, 최종 파일명 `scripts/export_external.py`로 변경된 이후의 전체 실행 인자와 명령행은 현재 확인되지 않았다. 따라서 실제 실행 명령은 해당 Kaggle 노트북의 변환 셀에서 확인한 뒤 아래에 그대로 기록해야 한다.
+| 인자 | 기본값 | 설명 |
+|---|---:|---|
+| `--n` | 260 | 변환할 표본 수 |
+| `--uav-gsd` | 0.1128 | UAV 영상 GSD 추정값 (m/px) |
+| `--theta-sign` | -1.0 | Phi1 부호 |
+| `--theta-offset` | 6.0 | Heading 보정 각도 |
 
-```bash
-# 실제 실행에 사용한 전체 명령을 기록
-# python scripts/export_external.py [실제 인자]
+**변환 과정**
+
+1. UAV-VisLoc Example의 `03/03.csv`에서 표본을 선택한다.
+2. `03/satellite03.tif`의 GeoTIFF 정보를 읽고 GPS 좌표를 위성 지도 픽셀 좌표로 변환한다.
+3. GPS를 중심으로 700×700px 위성 지도 영역을 읽는다.
+4. 원본 지도 축척을 고려해 512×512px, 128m 영역으로 변환한다.
+5. 드론 영상의 중앙 568×568px 영역을 자르고 256×256px로 리사이즈한다.
+6. Heading을 `theta = (-Phi1 + 6) mod 360`으로 변환한다.
+7. UAV 영상, 지도 블록, `samples.csv`를 출력한다.
+
+변환 결과는 다음 경로에 저장했다.
+
+```text
+/kaggle/working/data_uavvisloc_v5_260/
+├── samples.csv
+└── uavvisloc_03/
+    ├── k001_uav.jpg
+    ├── k001_block.jpg
+    └── ...
 ```
+
+최종 저장소의 변환 스크립트 경로는 `scripts/export_external.py`이다. 다만 위 실행 명령은 실험 당시 사용한 `/kaggle/working/export_external_v5.py`의 실행 이력을 기록한 것이며, 최종 저장소 파일명으로 실행한 명령은 아니다.
 
 ### 평가
 
@@ -41,7 +68,7 @@ python scripts/export_external.py --help
 # LoMa-B: 실제 평가 명령 기록
 ```
 
-**주의:** 위 주석 부분은 실행 명령이 확인되지 않은 상태다. 임의의 인자를 추가해 실제 실행 명령처럼 사용하지 않는다.
+**주의:** 평가 명령의 전체 인자는 아직 확인되지 않았다. 임의의 인자를 추가해 실제 실행 명령처럼 사용하지 않는다.
 
 ## 3. Evaluate 결과
 
