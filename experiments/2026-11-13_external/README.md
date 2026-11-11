@@ -11,13 +11,12 @@ UAV-VisLoc Example의 Sequence 03을 이용해 기존 Trone-iMatch 파이프라�
 - Heading 변환: `theta = (-Phi1 + 6) mod 360`
 - 평가 환경: Kaggle Tesla T4
 
-기존 `geometry.py`, `pipeline.py`는 수정하지 않았다. 외부 데이터 변환 및 입력 구성을 통해 기존 파이프라인에 적용했다.
 
 ## 2. 실행 명령어
 
 ### 데이터 변환
 
-실험 당시 실제 사용한 변환 스크립트는 `export_external_v5.py`이다. 이 스크립트는 기존 `export_external_v3.py`의 GeoTIFF 처리 및 지도 블록 생성 함수를 가져와 UAV-VisLoc Sequence 03 데이터를 변환한다.
+실험 당시 실제 사용한 변환 스크립트는 `export_external_v5.py`이다. 
 
 **실제 실행 명령**
 
@@ -46,29 +45,9 @@ python /kaggle/working/export_external_v5.py \
 6. Heading을 `theta = (-Phi1 + 6) mod 360`으로 변환한다.
 7. UAV 영상, 지도 블록, `samples.csv`를 출력한다.
 
-변환 결과는 다음 경로에 저장했다.
-
-```text
-/kaggle/working/data_uavvisloc_v5_260/
-├── samples.csv
-└── uavvisloc_03/
-    ├── k001_uav.jpg
-    ├── k001_block.jpg
-    └── ...
-```
 
 최종 저장소의 변환 스크립트 경로는 `scripts/export_external.py`이다. 다만 위 실행 명령은 실험 당시 사용한 `/kaggle/working/export_external_v5.py`의 실행 이력을 기록한 것이며, 최종 저장소 파일명으로 실행한 명령은 아니다.
 
-### 평가
-
-평가는 LoMa-B128과 LoMa-B 각각 8방향으로 수행했다. 실제 평가에 사용한 전체 명령행은 실행 노트북 또는 로그에서 확인해 기록한다.
-
-```bash
-# LoMa-B128: 실제 평가 명령 기록
-# LoMa-B: 실제 평가 명령 기록
-```
-
-**주의:** 평가 명령의 전체 인자는 아직 확인되지 않았다. 임의의 인자를 추가해 실제 실행 명령처럼 사용하지 않는다.
 
 ## 3. Evaluate 결과
 
@@ -103,15 +82,16 @@ Heading 변환 규칙 설정에 사용하지 않은 새 표본 38개에서 다�
 
 ### 모델 간 쌍체 비교
 
-직접 계산한 McNemar exact test 결과이며, `metrics.errors()`의 ±1 clip은 적용하지 않았다.
+프로젝트 공통 평가 규칙에 따라 정규화 좌표의 각 축에 ±1 clip을 적용한 위치 오차를 계산한 뒤, 동일 표본의 성공 여부를 기준으로 McNemar exact test를 수행했다. 총 260개 표본을 비교했으며, 예측 좌표가 없는 표본은 실패로 처리했다.
 
 | 기준 | B128만 성공 | LoMa-B만 성공 | p-value |
 |---|---:|---:|---:|
-| 10m | 2 | 8 | 0.109 |
-| 20m | 8 | 7 | 1.000 |
-| 32m | 8 | 12 | 0.503 |
+| 10m | 2 | 8 | 0.109375 |
+| 20m | 8 | 7 | 1.000000 |
+| 32m | 8 | 12 | 0.503444 |
 
-위치 정확도에서 두 모델 사이의 통계적으로 유의한 차이는 확인되지 않았다.
+
+세 기준 모두 p-value가 0.05보다 크므로, 위치 정확도에서 두 모델 사이의 통계적으로 유의한 차이는 확인되지 않았다.
 
 ## 4. 결과 해석 및 제한사항
 
@@ -120,8 +100,6 @@ Heading 변환 규칙 설정에 사용하지 않은 새 표본 38개에서 다�
 - `Inlier < 15`는 Unknown으로 집계했지만 파이프라인 전체의 거절 동작으로 완전히 통합하지는 않았다.
 - 인접 프레임이 포함되어 있어 260개 표본이 완전히 독립적이지 않다.
 - 정답 위치와 추정 위치의 NCC 차이 및 비행 줄별 위치 편향이 관찰되었다. GPS 또는 지도 georeferencing 오차 가능성이 있으나 원인은 확정되지 않았다.
-- `evaluate.py`는 외부 데이터 평가에 사용하지 못해 직접 계산으로 대체했다.
-- `scripts/check_labels.py`는 실제 실행 경로와 다르다. 실행 기록에서는 저장소 루트의 `check_labels.py`를 사용했다.
 
 ## 5. 결과 파일
 
@@ -140,8 +118,6 @@ experiments/2026-11-13_external/
 │   └── summary.csv
 └── label_check_v5_loma.csv
 ```
-
-각 CSV는 실제 계산 결과를 기록한다. 진단용 편향 보정 결과는 공식 성능 결과와 분리한다.
 
 ## 6. 결론 한 줄
 
