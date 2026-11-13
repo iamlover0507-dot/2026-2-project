@@ -33,5 +33,4 @@ reduce_dirs.py로 4방향, 8방향, 조기 종료 유무를 한 번에 비교합
 맞는지 검증하려면 run1113.py --stop-inl 15로 실제 조기 종료를 돌려, 2번에서 계산한 값과 비교합니다.
 
 ### 11-13에 만든 스크립트 위치
-'2026-2-project/scripts/2026-11-13 피드백 이후/reduce_dirs.py'<br>
-'2026-2-project/scripts/2026-11-13 피드백 이후/run1113.py'
+ `2026-2-project/scripts/2026-11-13 피드백 이후/reduce_dirs.py`<br>`2026-2-project/scripts/2026-11-13 피드백 이후/run1113.py`
