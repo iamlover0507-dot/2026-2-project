@@ -164,3 +164,37 @@ python scripts\reduce_dirs.py outputs\visloc-8dir\out\loma_s1.csv flights    # �
 | 4방향, 멈추기 없음 | 13.9% / 13.9% | 40.6% / 40.6% | 66.9% / 66.9% | 1.21초 → 1.27초 | 4.0 / 4.0 |
 | 8방향, 멈추기 15 | 14.0% / 14.0% | 40.3% / 40.3% | 66.6% / 66.6% | 1.40초 → 1.43초 | 4.6 / 4.6 |
 | 4방향, 멈추기 15 | 14.0% / 14.0% | 40.4% / 40.4% | 66.7% / 66.7% | 0.79초 → 0.83초 | 2.6 / 2.6 |
+
+## 5. 폴더 구조
+
+```
+scripts\
+├── run1113.py
+└── reduce_dirs.py
+
+experiments\2026-11-14_heading_dirs_visloc\
+├── README.md
+├── reduce_8dir_flights.md         비행별 표 (계산값, 부록)
+├── visloc-8dir\
+│   ├── loma_s1.csv                샘플당 1행: 추정 위치·heading, 오차, inlier 수, 시간
+│   ├── loma_s1_angles.csv         샘플 × 각도마다 1행
+│   └── summary.csv                비행별 요약
+├── visloc-4dir\
+│   ├── loma_s1.csv
+│   ├── loma_s1_angles.csv
+│   └── summary.csv
+├── visloc-8dir-stop\
+│   ├── loma_s1.csv
+│   ├── loma_s1_angles.csv
+│   └── summary.csv
+└── visloc-4dir-stop\
+    ├── loma_s1.csv
+    ├── loma_s1_angles.csv
+    └── summary.csv
+```
+
+2절 명령의 `outputs\<커널이름>\out\`는 작업 중 위치다. 이 폴더로 옮긴 뒤 분석은 다음처럼 실행한다.
+
+```
+python scripts\reduce_dirs.py experiments\2026-11-14_heading_dirs_visloc\visloc-8dir\loma_s1.csv flights
+```
