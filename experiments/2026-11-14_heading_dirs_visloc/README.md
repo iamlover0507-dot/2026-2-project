@@ -169,7 +169,7 @@ python scripts\reduce_dirs.py outputs\visloc-8dir\out\loma_s1.csv flights    # �
 
 ```
 scripts\
-├── run1113.py
+├── run1113.py           run.py를 수정한 파일
 └── reduce_dirs.py
 
 experiments\2026-11-14_heading_dirs_visloc\
